@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#12335b">
   <meta name="color-scheme" content="light">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-P+Yo0lWtK89ezScZ4ljm02HZK8cnbRkL3dDa9xZWsZs=' https://cdn.jsdelivr.net; style-src 'sha256-ZnFNHdmWJxoPzkxyhQFQw3IJma252wdbiiMrFXaS0yA='; img-src 'self' data:; media-src 'self' blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-3G0UYjUeTTwwvGFbZEQIPEpAV6vd+m2NPxjkVCDru2U=' https://cdn.jsdelivr.net; style-src 'sha256-ZnFNHdmWJxoPzkxyhQFQw3IJma252wdbiiMrFXaS0yA='; img-src 'self' data:; media-src 'self' blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
   <meta name="referrer" content="no-referrer">
   <title>セミナーQR受付｜カメラ検証版</title>
   <style>
@@ -20,7 +20,7 @@
   <header class="header">
     <div class="header__inner">
       <div class="brand"><span class="brand__mark" aria-hidden="true">▦</span><span>セミナーQR受付</span></div>
-      <span class="pill">カメラ検証版 v0.1</span>
+      <span class="pill">カメラ検証版 v0.2</span>
     </div>
   </header>
 
@@ -66,7 +66,7 @@
             <div><dt>事業所名</dt><dd id="businessText">—</dd></div>
             <div><dt>参加者名</dt><dd id="nameText">—</dd></div>
           </dl>
-          <p class="result-note">この3項目は、これまでのテスト用QR形式に対応しています。<strong>本人確認・受付確定ではありません。</strong></p>
+          <p class="result-note">従来のテストQRに加え、新しい受付用QRの形式を識別します。<strong>本人確認・受付確定ではありません。</strong></p>
         </section>
 
         <section class="panel session-panel" aria-labelledby="session-title">
@@ -88,8 +88,8 @@
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
   <script>
 /*
- * セミナーQR受付：カメラ読取検証版 v0.1
- * GitHub Pages / iPad Safari 用。ネット送信、保存、GAS連携は一切しない。
+ * セミナーQR受付：カメラ読取検証版 v0.2
+ * GitHub Pages / iPad Safari 用。ネット送信、受付確定、GAS連携は一切しない。
  * jsQR 1.4.0 (Apache-2.0) を使用。
  */
 (() => {
@@ -260,16 +260,27 @@
   }
 
   function parseTestPayload(raw) {
-    // 現在のテスト用QR: {"seminar":"...","business":"...","name":"..."}
-    // 正式版は無作為の受付IDへ変更予定。ここで認証・受付判定はしない。
+    // 正式QR: {"v":1,"s":"SEM-...","t":"64桁の秘密トークン"}
+    // QRの形式だけ判別し、認証・台帳照合・受付済み更新は行わない。
+    // 従来のテスト用JSONも引き続き読める。
     if (typeof raw !== 'string' || raw.length > MAX_QR_CHARS) return null;
     try {
       const obj = JSON.parse(raw);
       if (!obj || Array.isArray(obj) || typeof obj !== 'object') return null;
+      if (obj.v === 1 && typeof obj.s === 'string' &&
+          /^SEM-[0-9a-f-]{36}$/i.test(obj.s) &&
+          typeof obj.t === 'string' && /^[0-9a-f]{64}$/i.test(obj.t)) {
+        return {
+          kind: 'reception-token',
+          seminar: '受付ID: ' + obj.s.slice(0, 12) + '…',
+          business: 'サーバー照合後に表示',
+          name: 'サーバー照合後に表示'
+        };
+      }
       for (const k of ['seminar', 'business', 'name']) {
         if (typeof obj[k] !== 'string' || obj[k].trim().length < 1 || obj[k].length > 150) return null;
       }
-      return { seminar: obj.seminar, business: obj.business, name: obj.name };
+      return { kind: 'legacy-test', seminar: obj.seminar, business: obj.business, name: obj.name };
     } catch (_) {
       return null;
     }
@@ -315,7 +326,11 @@
     }
     seen.add(raw);
     el('scanCount').textContent = String(seen.size);
-    status('QR読み取り成功', 'カメラは動作中です。次のQRをかざせます。', 'success');
+    if (data.kind === 'reception-token') {
+      status('受付用QRを検出しました', '受付確定・台帳更新は未接続です。カメラは続けて動作します。', 'waiting');
+    } else {
+      status('テストQR読み取り成功', 'カメラは動作中です。次のQRをかざせます。', 'success');
+    }
     beep(false);
   }
 
