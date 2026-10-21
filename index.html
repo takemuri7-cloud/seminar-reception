@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#12335b">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-P+Yo0lWtK89ezScZ4ljm02HZK8cnbRkL3dDa9xZWsZs=' https://cdn.jsdelivr.net; style-src 'sha256-ZnFNHdmWJxoPzkxyhQFQw3IJma252wdbiiMrFXaS0yA='; img-src 'self' data:; media-src 'self' blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>セミナーQR受付｜カメラ検証版</title>
+  <style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;color:#1a2b3b;background:#f2f5fa;font-size:16px;-webkit-text-size-adjust:100%}
+*{box-sizing:border-box}body{margin:0;min-height:100vh}button{font:inherit;touch-action:manipulation}button:focus-visible{outline:3px solid #80b6ff;outline-offset:3px}.header{background:#12335b;color:white;padding:15px max(20px,env(safe-area-inset-right)) 15px max(20px,env(safe-area-inset-left));box-shadow:0 2px 10px rgba(15,38,64,.1)}.header__inner{max-width:1250px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px;letter-spacing:.01em}.brand__mark{display:grid;place-items:center;width:33px;height:33px;background:#e4effd;color:#143969;border-radius:9px;font-size:27px}.pill{background:#355781;color:#fff;font-size:12px;font-weight:700;padding:7px 12px;border-radius:50px;white-space:nowrap}.main{max-width:1250px;margin:0 auto;padding:27px 20px 48px}.intro{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:22px}.eyebrow{color:#4a6b8e;font-size:13px;font-weight:700;margin:0 0 6px}h1{font-size:clamp(23px,3.1vw,34px);margin:0;line-height:1.35;letter-spacing:-.025em}.subcopy{color:#596b7d;margin:8px 0 0;font-size:14px;line-height:1.7}.test-banner{display:flex;flex-direction:column;gap:5px;max-width:245px;border:1px solid #f2d194;background:#fff8e9;border-radius:12px;padding:11px 14px;color:#74521c;font-size:12px;flex-shrink:0}.test-banner strong{font-size:14px}.layout{display:grid;grid-template-columns:minmax(0,1.48fr) minmax(310px,1fr);gap:19px;align-items:start}.panel{border:1px solid #e4e9f1;border-radius:16px;background:#fff;box-shadow:0 3px 12px rgba(20,51,91,.045);overflow:hidden}.camera-panel{padding:17px}.panel-top{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:13px}h2{font-size:18px;margin:0;color:#1a3657}.camera-state{font-size:13px;font-weight:700;color:#5b6675;background:#f1f4f8;border-radius:40px;padding:6px 11px}.camera-state.is-on{color:#116b44;background:#e5f8ed}.camera-state.is-error{color:#a33131;background:#feeaea}.viewport{position:relative;background:#15202c;width:100%;border-radius:12px;overflow:hidden;aspect-ratio:4/3;min-height:210px;display:flex;justify-content:center;align-items:center}video{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;background:#15202c}video.mirrored{transform:scaleX(-1)}.scan-corners{pointer-events:none;position:absolute;width:55%;aspect-ratio:1;max-height:76%;z-index:3;opacity:0;transition:opacity .2s}.scan-corners.is-on{opacity:1}.scan-corners i{position:absolute;width:30px;height:30px;border:solid #fff;border-width:0}.scan-corners i:nth-child(1){top:0;left:0;border-top-width:4px;border-left-width:4px;border-top-left-radius:4px}.scan-corners i:nth-child(2){top:0;right:0;border-top-width:4px;border-right-width:4px;border-top-right-radius:4px}.scan-corners i:nth-child(3){bottom:0;left:0;border-bottom-width:4px;border-left-width:4px;border-bottom-left-radius:4px}.scan-corners i:nth-child(4){bottom:0;right:0;border-bottom-width:4px;border-right-width:4px;border-bottom-right-radius:4px}.viewport-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;gap:13px;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px}.viewport-placeholder strong{font-size:20px}.viewport-placeholder small{font-size:12px;color:#c1d0df}.placeholder-icon{font-size:64px;line-height:1;font-weight:200;color:#abc3df}.viewport-placeholder.is-hidden{display:none}.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.button{border:0;border-radius:10px;min-height:50px;padding:10px 18px;font-weight:800;cursor:pointer}.button:disabled{cursor:not-allowed;opacity:.46}.button--primary{background:#144b87;color:white;min-width:160px;flex:1}.button--primary:not(:disabled):active{background:#0f3970}.button--secondary{background:#e6ecf3;color:#203e60;min-width:88px}.button--quiet{background:#fff;border:1px solid #d0dbea;color:#3b536c;flex:1}.hint{font-size:12px;line-height:1.7;color:#62758b;margin:12px 0 0}.side{display:flex;flex-direction:column;gap:18px}.result-panel,.session-panel{padding:18px}.status-dot{width:10px;height:10px;border-radius:50%;background:#9cabbb}.result-banner{padding:18px 15px;border-radius:10px;text-align:center;min-height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.result-banner>span{font-size:22px;font-weight:850;line-height:1.4}.result-banner p{font-size:13px;line-height:1.5;margin:0}.result-banner--waiting{background:#eef3f8;color:#45617a}.result-banner--success{background:#e5f7ed;color:#17613a}.result-banner--duplicate{background:#fff2d9;color:#80520e}.result-banner--error{background:#ffeded;color:#923134}.info-list{margin:9px 0 0}.info-list>div{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid #edf1f5}.info-list dt{font-size:13px;color:#66778b}.info-list dd{margin:0;font-size:15px;font-weight:750;overflow-wrap:anywhere}.result-note{font-size:11px;color:#64768a;line-height:1.75;margin:15px 0 0}.counter{display:flex;align-items:baseline;justify-content:center;gap:9px;background:#eff5ff;border-radius:10px;color:#193f71;padding:12px;margin-top:8px}.counter #scanCount{font-size:44px;font-weight:850;line-height:1.3;font-variant-numeric:tabular-nums}.counter>span:last-child{font-size:15px;font-weight:700}.reset{border:none;background:none;font-size:12px;text-decoration:underline;color:#356190;padding:8px 0;cursor:pointer}.privacy{margin-top:22px;border:1px solid #e4e9f0;background:#fff;border-radius:14px;padding:17px 20px;font-size:13px;color:#3e526a}.privacy strong{display:block;font-size:14px;margin-bottom:3px;color:#264360}.privacy p{margin:0;line-height:1.8}.footer{text-align:center;font-size:11px;color:#718399;padding:0 20px 25px}@media(max-width:900px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1.25fr .75fr;gap:15px}.test-banner{display:none}.viewport{max-height:54vh}.main{padding:22px 15px 42px}}@media(max-width:620px){.brand{font-size:16px}.pill{font-size:10px}.intro{margin-bottom:15px}h1{font-size:24px}.side{display:flex}.camera-panel,.result-panel,.session-panel{padding:13px}.viewport{aspect-ratio:4/3;min-height:200px}.button{min-height:48px}.info-list>div{grid-template-columns:80px minmax(0,1fr)}}
+
+  </style>
+  <!-- jsQR 1.4.0, Apache-2.0. カメラ映像の解析は端末内で行います。 -->
+
+</head>
+<body>
+  <header class="header">
+    <div class="header__inner">
+      <div class="brand"><span class="brand__mark" aria-hidden="true">▦</span><span>セミナーQR受付</span></div>
+      <span class="pill">カメラ検証版 v0.1</span>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="intro">
+      <div>
+        <p class="eyebrow">iPad / Safari・インカメラ対応</p>
+        <h1>QRコードをかざしてください</h1>
+        <p class="subcopy">スマホに届いたQRコードを、iPadの画面側カメラに向けてください。</p>
+      </div>
+      <div class="test-banner" role="note"><strong>読取テスト専用</strong><span>この画面では出席・受付記録を保存しません。</span></div>
+    </div>
+
+    <div class="layout">
+      <section class="panel camera-panel" aria-labelledby="camera-title">
+        <div class="panel-top"><h2 id="camera-title">カメラ</h2><span id="cameraState" class="camera-state">停止中</span></div>
+        <div class="viewport" id="viewport">
+          <video id="video" playsinline autoplay muted aria-label="カメラ映像"></video>
+          <div class="scan-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="viewport-placeholder" id="placeholder">
+            <span class="placeholder-icon" aria-hidden="true">◎</span>
+            <strong>前面カメラを起動してください</strong>
+            <small>カメラ映像はサーバーへ送信しません</small>
+          </div>
+        </div>
+        <div class="controls">
+          <button id="startButton" class="button button--primary" type="button">カメラを起動</button>
+          <button id="stopButton" class="button button--secondary" type="button" disabled>停止</button>
+          <button id="flipButton" class="button button--quiet" type="button" disabled>前面／背面を切替</button>
+        </div>
+        <p class="hint" id="cameraHelp">Safariで「カメラの使用」を求められたら「許可」を選んでください。</p>
+      </section>
+
+      <aside class="side">
+        <section class="panel result-panel" aria-labelledby="result-title">
+          <div class="panel-top"><h2 id="result-title">読取結果</h2><span id="statusIcon" class="status-dot" aria-hidden="true"></span></div>
+          <div class="result-banner result-banner--waiting" id="resultBanner" role="status" aria-live="polite" aria-atomic="true">
+            <span id="resultTitle">読み取り待機中</span>
+            <p id="resultSubtitle">カメラ起動後、QRを映してください</p>
+          </div>
+          <dl class="info-list">
+            <div><dt>セミナー</dt><dd id="seminarText">—</dd></div>
+            <div><dt>事業所名</dt><dd id="businessText">—</dd></div>
+            <div><dt>参加者名</dt><dd id="nameText">—</dd></div>
+          </dl>
+          <p class="result-note">この3項目は、これまでのテスト用QR形式に対応しています。<strong>本人確認・受付確定ではありません。</strong></p>
+        </section>
+
+        <section class="panel session-panel" aria-labelledby="session-title">
+          <div class="panel-top"><h2 id="session-title">この画面内の検出数</h2><button id="resetButton" class="reset" type="button">件数をリセット</button></div>
+          <div class="counter"><span id="scanCount">0</span><span>件</span></div>
+          <p class="hint">同じQRは1件として数えます。ブラウザを閉じると件数・読み取った内容は消えます。</p>
+        </section>
+      </aside>
+    </div>
+
+    <section class="privacy" aria-label="セキュリティ上の注意">
+      <strong>この検証版の安全設計</strong>
+      <p>カメラ映像とQRの文字列は端末内で解析し、外部へ送信しません。名簿の取得・Googleへの送信・受付履歴の保存は未実装です。GitHub Pages自体は公開ページなので、この画面に秘密鍵・申込者名簿を置かないでください。</p>
+    </section>
+  </main>
+
+  <canvas id="workCanvas" hidden aria-hidden="true"></canvas>
+  <footer class="footer">セミナー受付システム・カメラ連続読み取り検証</footer>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script>
+/*
+ * セミナーQR受付：カメラ読取検証版 v0.1
+ * GitHub Pages / iPad Safari 用。ネット送信、保存、GAS連携は一切しない。
+ * jsQR 1.4.0 (Apache-2.0) を使用。
+ */
+(() => {
+  'use strict';
+
+  const el = (id) => document.getElementById(id);
+  const video = el('video');
+  const canvas = el('workCanvas');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  const startButton = el('startButton');
+  const stopButton = el('stopButton');
+  const flipButton = el('flipButton');
+  const resetButton = el('resetButton');
+  const seen = new Set();                 // 揮発性。ページの再読み込みで消える。
+
+  let stream = null;
+  let running = false;
+  let starting = false;
+  let scanTimer = null;
+  let facing = 'user';                   // 前面カメラ優先
+  let sessionId = 0;
+  let audioContext = null;
+  let lastNotice = { key: '', time: 0 };
+
+  const MAX_IMAGE_EDGE = 800;
+  const SCAN_INTERVAL_MS = 150;
+  const REPEAT_NOTICE_INTERVAL_MS = 4000;
+  const MAX_QR_CHARS = 4096;
+
+  function status(title, subtitle, kind = 'waiting') {
+    el('resultTitle').textContent = title;
+    el('resultSubtitle').textContent = subtitle;
+    el('resultBanner').className = 'result-banner result-banner--' + kind;
+    el('statusIcon').style.background = {
+      waiting: '#9cabbb', success: '#22a065', duplicate: '#d59b22', error: '#d55050'
+    }[kind];
+  }
+
+  function cameraState(label, kind) {
+    el('cameraState').textContent = label;
+    el('cameraState').className = 'camera-state' + (kind ? ' is-' + kind : '');
+  }
+
+  function setDetails(data) {
+    el('seminarText').textContent = data?.seminar || '—';
+    el('businessText').textContent = data?.business || '—';
+    el('nameText').textContent = data?.name || '—';
+  }
+
+  function stopCamera(updateStatus = true) {
+    // 前のカメラ起動・読取ループを無効にする。
+    sessionId++;
+    running = false;
+    starting = false;
+    if (scanTimer !== null) {
+      clearTimeout(scanTimer);
+      scanTimer = null;
+    }
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+    }
+    video.pause();
+    video.srcObject = null;
+    el('placeholder').classList.remove('is-hidden');
+    el('viewport').querySelector('.scan-corners').classList.remove('is-on');
+    cameraState('停止中');
+    startButton.disabled = false;
+    startButton.textContent = 'カメラを起動';
+    stopButton.disabled = true;
+    flipButton.disabled = true;
+    if (updateStatus) {
+      status('読み取り待機中', 'カメラを起動してください');
+    }
+  }
+
+  async function startCamera() {
+    if (starting || running) return;
+    if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) {
+      cameraState('起動不可', 'error');
+      status('カメラを使えません', 'HTTPSのGitHub PagesをSafariで直接開いてください。', 'error');
+      el('cameraHelp').textContent = 'Google Apps Scriptの埋め込み画面ではなく、GitHub PagesのURLを直接開いてください。';
+      return;
+    }
+    if (typeof window.jsQR !== 'function') {
+      cameraState('読取機能なし', 'error');
+      status('QR解析ライブラリを読み込めません', 'インターネット接続または外部JavaScriptの読み込み制限を確認してください。', 'error');
+      el('cameraHelp').textContent = 'カメラは起動させていません。jsQRライブラリの読み込みが必要です。';
+      return;
+    }
+
+    const thisSession = ++sessionId;
+    starting = true;
+    startButton.disabled = true;
+    stopButton.disabled = true;
+    flipButton.disabled = true;
+    cameraState('起動中');
+    status('カメラを起動しています', 'Safariでカメラ使用を許可してください');
+    try {
+      // Safari のカメラ選択に失敗しにくいよう、exact は指定しない。
+      const s = await navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: { facingMode: { ideal: facing }, width: { ideal: 1280 }, height: { ideal: 720 } }
+      });
+      if (thisSession !== sessionId) {
+        s.getTracks().forEach(t => t.stop());
+        return;
+      }
+      stream = s;
+      video.srcObject = stream;
+      video.classList.toggle('mirrored', facing === 'user');
+      await video.play();
+      if (thisSession !== sessionId) return;
+      starting = false;
+      running = true;
+      startButton.disabled = true;
+      stopButton.disabled = false;
+      flipButton.disabled = false;
+      el('placeholder').classList.add('is-hidden');
+      el('viewport').querySelector('.scan-corners').classList.add('is-on');
+      cameraState('読取中', 'on');
+      status('QRコードをかざしてください', '前面カメラで連続読み取り中');
+      el('cameraHelp').textContent = '読み取り後もカメラは停止しません。続けて次のQRコードをかざせます。';
+      scheduleScan(thisSession);
+    } catch (err) {
+      if (thisSession !== sessionId) return;
+      stopCamera(false);
+      cameraState('起動失敗', 'error');
+      const reason = err?.name || 'UnknownError';
+      const message = reason === 'NotAllowedError' || reason === 'PermissionDeniedError'
+        ? 'Safariのカメラ権限を確認してください。'
+        : reason === 'NotFoundError' || reason === 'OverconstrainedError'
+          ? 'カメラが見つかりません。ほかのアプリが使用していないか確認してください。'
+          : 'ページを再読み込みして、もう一度試してください。';
+      status('カメラ起動失敗', `${reason}：${message}`, 'error');
+      el('cameraHelp').textContent = '撮影ボタンは使いません。起動できなければエラー名を控えてください。';
+    }
+  }
+
+  function scheduleScan(thisSession) {
+    if (!running || thisSession !== sessionId) return;
+    scanTimer = setTimeout(() => scanFrame(thisSession), SCAN_INTERVAL_MS);
+  }
+
+  function scanFrame(thisSession) {
+    if (!running || thisSession !== sessionId) return;
+    try {
+      if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && video.videoWidth > 0) {
+        const ratio = Math.min(1, MAX_IMAGE_EDGE / Math.max(video.videoWidth, video.videoHeight));
+        const width = Math.max(1, Math.round(video.videoWidth * ratio));
+        const height = Math.max(1, Math.round(video.videoHeight * ratio));
+        if (canvas.width !== width) canvas.width = width;
+        if (canvas.height !== height) canvas.height = height;
+        ctx.drawImage(video, 0, 0, width, height);
+        const pixels = ctx.getImageData(0, 0, width, height);
+        const result = window.jsQR(pixels.data, width, height, { inversionAttempts: 'attemptBoth' });
+        if (result?.data) readQr(result.data);
+      }
+    } catch (err) {
+      // 単発の解析失敗でカメラを落とさず、次フレームで再試行。
+      if (err?.name === 'SecurityError') {
+        stopCamera(false);
+        status('映像を解析できません', 'ブラウザのカメラ制限を確認してください。', 'error');
+        return;
+      }
+    }
+    scheduleScan(thisSession);
+  }
+
+  function parseTestPayload(raw) {
+    // 現在のテスト用QR: {"seminar":"...","business":"...","name":"..."}
+    // 正式版は無作為の受付IDへ変更予定。ここで認証・受付判定はしない。
+    if (typeof raw !== 'string' || raw.length > MAX_QR_CHARS) return null;
+    try {
+      const obj = JSON.parse(raw);
+      if (!obj || Array.isArray(obj) || typeof obj !== 'object') return null;
+      for (const k of ['seminar', 'business', 'name']) {
+        if (typeof obj[k] !== 'string' || obj[k].trim().length < 1 || obj[k].length > 150) return null;
+      }
+      return { seminar: obj.seminar, business: obj.business, name: obj.name };
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function beep(isDuplicate = false) {
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      if (!audioContext) audioContext = new Ctx();
+      if (audioContext.state === 'suspended') audioContext.resume().catch(() => {});
+      const now = audioContext.currentTime;
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      oscillator.type = 'sine';
+      oscillator.frequency.value = isDuplicate ? 400 : 880;
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.exponentialRampToValueAtTime(0.12, now + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+      oscillator.start(now);
+      oscillator.stop(now + 0.13);
+    } catch (_) { /* マナーモードなどで鳴らなくても読み取り処理は継続 */ }
+  }
+
+  function readQr(raw) {
+    const timestamp = Date.now();
+    // 同じQRを映しっぱなしでもメッセージを連打しない。
+    if (lastNotice.key === raw && timestamp - lastNotice.time < REPEAT_NOTICE_INTERVAL_MS) return;
+    lastNotice = { key: raw, time: timestamp };
+    const data = parseTestPayload(raw);
+    if (!data) {
+      setDetails(null);
+      status('対象外のQRコード', '現在のテスト形式ではありません。', 'error');
+      return;
+    }
+    setDetails(data);
+    if (seen.has(raw)) {
+      status('このQRは読み取り済み', '同一画面内では重複して件数に加えません。', 'duplicate');
+      beep(true);
+      return;
+    }
+    seen.add(raw);
+    el('scanCount').textContent = String(seen.size);
+    status('QR読み取り成功', 'カメラは動作中です。次のQRをかざせます。', 'success');
+    beep(false);
+  }
+
+  startButton.addEventListener('click', () => {
+    // iPadの音声再生制限に備え、ユーザー操作で AudioContext を準備。
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (Ctx && !audioContext) audioContext = new Ctx();
+      audioContext?.resume().catch(() => {});
+    } catch (_) {}
+    startCamera();
+  });
+  stopButton.addEventListener('click', () => stopCamera());
+  flipButton.addEventListener('click', () => {
+    facing = facing === 'user' ? 'environment' : 'user';
+    stopCamera(false);
+    startCamera();
+  });
+  resetButton.addEventListener('click', () => {
+    seen.clear();
+    lastNotice = { key: '', time: 0 };
+    setDetails(null);
+    el('scanCount').textContent = '0';
+    status('件数をリセットしました', running ? '引き続きQRをかざせます。' : 'カメラを起動してください。');
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopCamera(false);
+  });
+  window.addEventListener('pagehide', () => stopCamera(false));
+})();
+
+  </script>
+</body>
+</html>
